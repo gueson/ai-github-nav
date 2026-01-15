@@ -37,16 +37,17 @@ export async function searchAiRepositories(
   // Note: "topic:ai" is a good start, but we might want broader coverage like "machine-learning" or just "ai" in text
   // Requirement says: "Star数量 >= 1000", "AI相关"
   
-  let q = "stars:>=1000 fork:true is:public archived:false";
+  let q = "";
   
   // Add AI keyword constraint
-  // We combine multiple topics or a general text search if keyword is empty
+  // If no keyword, we use a broad keyword search to ensure coverage (Agent, MCP, LLM, etc.)
+  // We switch from 'topic:' to general keyword search to catch repos that mention these terms in description/name but lack specific topics.
   if (!keyword) {
-    q += " topic:ai"; 
+    q = "ai OR agent OR mcp OR llm OR machine-learning stars:>=1000 fork:true is:public archived:false"; 
   } else {
     // If keyword exists, we search in name, description, topics
     // API syntax: "keyword in:name,description,topics"
-    q += ` ${keyword} in:name,description,topics`;
+    q = `${keyword} in:name,description,topics stars:>=1000 fork:true is:public archived:false`;
   }
 
   try {

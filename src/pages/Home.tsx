@@ -92,7 +92,7 @@ export default function Home() {
                 找到 <span className="font-bold text-slate-900">{data.total_count.toLocaleString()}</span> 个相关仓库
                 {data.total_count > 1000 && (
                   <span className="ml-2 inline-flex items-center text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                    仅展示前 1k条
+                    仅展示前 1k
                   </span>
                 )}
               </span>
@@ -159,7 +159,7 @@ export default function Home() {
             {/* End of results message */}
             {data && page * 50 >= Math.min(data.total_count, 1000) && (
               <div className="text-center py-8 text-slate-400 text-sm">
-                已加载全部高星 AI 仓库 (GitHub API 前1000 条结果)
+                已加载全部高星 AI 仓库 (GitHub API 限制前 1000 条结果)
               </div>
             )}
           </>
