@@ -2,24 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
-        http://www.google.com/schemas/sitemap-image/1.1
-        http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
     <!-- 主页 -->
     <url>
         <loc>https://ai-github-nav.vercel.app/</loc>
         <lastmod>2026-01-16</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
-    </url>
-    
-    <!-- AI相关分类页面 -->
-    <url>
-        <loc>https://ai-github-nav.vercel.app/</loc>
-        <lastmod>2026-01-16</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
         <image:image>
             <image:loc>https://ai-github-nav.vercel.app/og-image.png</image:loc>
             <image:caption>GitHub AI 导航 - 精选全球最佳 AI 开源项目</image:caption>
@@ -74,9 +63,25 @@
         <priority>0.8</priority>
     </url>
     
+    <!-- AI相关 -->
+    <url>
+        <loc>https://ai-github-nav.vercel.app/?q=ai</loc>
+        <lastmod>2026-01-16</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
     <!-- MCP相关 -->
     <url>
         <loc>https://ai-github-nav.vercel.app/?q=mcp</loc>
+        <lastmod>2026-01-16</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- GeoAI相关 -->
+    <url>
+        <loc>https://ai-github-nav.vercel.app/?q=geo</loc>
         <lastmod>2026-01-16</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
