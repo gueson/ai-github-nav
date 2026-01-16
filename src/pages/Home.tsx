@@ -10,7 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 
 export default function Home() {
-  const [query, setQuery] = useState("");
+  // 从URL获取初始查询参数
+  const getInitialQuery = () => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("q") || "";
+  };
+  
+  const [query, setQuery] = useState(getInitialQuery());
   const [order, setOrder] = useState<"desc" | "asc">("desc");
   const [page, setPage] = useState(1);
   const [data, setData] = useState<SearchResult | null>(null);
@@ -19,6 +25,19 @@ export default function Home() {
   
   // Use a ref to scroll to top on page change
   const topRef = useRef<HTMLDivElement>(null);
+  
+  // 当查询参数变化时更新URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (query) {
+      params.set("q", query);
+    } else {
+      params.delete("q");
+    }
+    
+    const newUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+    window.history.replaceState(null, "", newUrl);
+  }, [query]);
 
   const fetchData = async () => {
     setLoading(true);
