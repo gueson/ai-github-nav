@@ -77,7 +77,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       {/* Header */}
       <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm">
         <div className="container max-w-[1400px] mx-auto px-4 h-20 flex items-center justify-between gap-4">
@@ -186,7 +186,7 @@ export default function Home() {
       </main>
       
       {/* Footer */}
-      <footer className="w-full bg-white border-t border-slate-200">
+      <footer className="w-full bg-white border-t border-slate-200 mt-auto">
         <div className="container max-w-[1400px] mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">

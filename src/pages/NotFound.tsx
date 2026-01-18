@@ -45,7 +45,7 @@ export default function NotFound() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full bg-white border-t border-slate-200">
+      <footer className="w-full bg-white border-t border-slate-200 mt-auto">
         <div className="container max-w-[1400px] mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
