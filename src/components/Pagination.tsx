@@ -19,7 +19,7 @@ export function Pagination({ page, totalItems, perPage, onPageChange, isLoading 
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-12 mb-8">
+    <div className="flex items-center justify-center gap-2 mt-12 mb-8 [&_button]:cursor-pointer [&_button:disabled]:cursor-not-allowed">
       <Button
         variant="outline"
         size="icon"

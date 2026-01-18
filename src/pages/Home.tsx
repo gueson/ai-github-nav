@@ -43,7 +43,7 @@ export default function Home() {
     setLoading(true);
     setError("");
     try {
-      const result = await searchAiRepositories(query, "stars", order, page);
+      const result = await searchAiRepositories(query, "stars", order, page, 24);
       setData(result);
       // Scroll to top of list smoothly
       if (page > 1) {
@@ -169,14 +169,14 @@ export default function Home() {
               <Pagination
                 page={page}
                 totalItems={data.total_count}
-                perPage={50}
+                perPage={24}
                 onPageChange={setPage}
                 isLoading={loading}
               />
             )}
             
             {/* End of results message */}
-            {data && page * 50 >= Math.min(data.total_count, 1000) && (
+            {data && page * 24 >= Math.min(data.total_count, 1000) && (
               <div className="text-center py-8 text-slate-400 text-sm">
                 已加载全部高星 AI 仓库 (GitHub API 限制前 1000 条结果)
               </div>
@@ -184,6 +184,40 @@ export default function Home() {
           </>
         )}
       </main>
+      
+      {/* Footer */}
+      <footer className="w-full bg-white border-t border-slate-200">
+        <div className="container max-w-[1400px] mx-auto px-4 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+                <Github className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-slate-900">GitHub AI 导航</h2>
+                <p className="text-xs text-slate-500">精选全球最佳 AI 开源项目</p>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-6 text-sm">
+              <a href="https://github.com/gueson/ai-github-nav" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
+                项目源码
+              </a>
+              <a href="https://github.com/gueson/ai-github-nav/issues" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
+                反馈问题
+              </a>
+              <a href="https://github.com/gueson/ai-github-nav/pulls" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
+                贡献代码
+              </a>
+            </div>
+          </div>
+          
+          <div className="mt-8 pt-8 border-t border-slate-200 text-center text-xs text-slate-500">
+            <p>© {new Date().getFullYear()} GitHub AI 导航. 数据来源于 GitHub API.</p>
+            <p className="mt-1">仅用于学习和研究目的，所有内容的版权归原作者所有。</p>
+          </div>
+        </div>
+      </footer>
       
       <Toaster />
     </div>
