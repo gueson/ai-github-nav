@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Github } from "lucide-react";
+import { t } from "@/lib/i18n";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export default function NotFound() {
   return (
@@ -13,8 +15,8 @@ export default function NotFound() {
               <Github className="w-6 h-6" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold tracking-tight text-slate-900">GitHub AI 导航</h1>
-              <p className="text-xs text-slate-500 font-medium">精选高 Star 开源项目</p>
+              <h1 className="text-xl font-bold tracking-tight text-slate-900">{t('app.title')}</h1>
+              <p className="text-xs text-slate-500 font-medium">{t('app.subtitle')}</p>
             </div>
           </div>
           
@@ -23,23 +25,22 @@ export default function NotFound() {
             <div className="h-10 bg-white border border-slate-200 rounded-lg" />
           </div>
 
-          <div className="shrink-0 w-10 sm:w-auto" />
+          <LanguageToggle />
         </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center p-8 text-center">
         <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-          <h1 className="text-5xl font-bold text-primary">404</h1>
+          <h1 className="text-5xl font-bold text-primary">{t('notFound.title')}</h1>
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 mb-4">页面不存在</h2>
+        <h2 className="text-2xl font-bold text-slate-900 mb-4">{t('notFound.message')}</h2>
         <p className="text-slate-500 max-w-md mb-8">
-          很抱歉，您访问的页面不存在或已被移动。
-          请返回主页继续浏览优质的 AI 开源项目。
+          {t('notFound.description')}
         </p>
         <Link href="/">
           <Button size="lg" className="gap-2">
             <Github className="w-5 h-5" />
-            返回主页
+            {t('notFound.backHome')}
           </Button>
         </Link>
       </main>
@@ -53,27 +54,27 @@ export default function NotFound() {
                 <Github className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">GitHub AI 导航</h2>
-                <p className="text-xs text-slate-500">精选全球最佳 AI 开源项目</p>
+                <h2 className="text-lg font-bold text-slate-900">{t('footer.title')}</h2>
+                <p className="text-xs text-slate-500">{t('footer.subtitle')}</p>
               </div>
             </div>
             
             <div className="flex flex-wrap justify-center gap-6 text-sm">
               <a href="https://github.com/gueson/ai-github-nav" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
-                项目源码
+                {t('footer.source')}
               </a>
               <a href="https://github.com/gueson/ai-github-nav/issues" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
-                反馈问题
+                {t('footer.issues')}
               </a>
               <a href="https://github.com/gueson/ai-github-nav/pulls" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
-                贡献代码
+                {t('footer.pullRequests')}
               </a>
             </div>
           </div>
           
           <div className="mt-8 pt-8 border-t border-slate-200 text-center text-xs text-slate-500">
-            <p>© {new Date().getFullYear()} GitHub AI 导航. 数据来源于 GitHub API.</p>
-            <p className="mt-1">仅用于学习和研究目的，所有内容的版权归原作者所有。</p>
+            <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+            <p className="mt-1">{t('footer.license')}</p>
           </div>
         </div>
       </footer>

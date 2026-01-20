@@ -8,6 +8,8 @@ import type { SearchResult } from "@/lib/github";
 import { AlertCircle, RefreshCcw, Github, Search as SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
+import { t } from "@/lib/i18n";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export default function Home() {
   // 从URL获取初始查询参数
@@ -86,8 +88,8 @@ export default function Home() {
               <Github className="w-6 h-6" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold tracking-tight text-slate-900">GitHub AI 导航</h1>
-              <p className="text-xs text-slate-500 font-medium">精选高 Star 开源项目</p>
+              <h1 className="text-xl font-bold tracking-tight text-slate-900">{t('app.title')}</h1>
+              <p className="text-xs text-slate-500 font-medium">{t('app.subtitle')}</p>
             </div>
           </div>
           
@@ -95,7 +97,7 @@ export default function Home() {
             <SearchBar onSearch={handleSearch} isLoading={loading} />
           </div>
 
-          <div className="shrink-0 w-10 sm:w-auto" /> {/* Spacer or Auth placeholder */}
+          <LanguageToggle />
         </div>
       </header>
 
@@ -105,18 +107,18 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
           <div className="text-sm text-slate-500 font-medium order-2 sm:order-1">
             {loading ? (
-              <span className="animate-pulse">正在搜索优质 AI 项目...</span>
+              <span className="animate-pulse">{t('search.loading')}</span>
             ) : data ? (
               <span>
-                找到 <span className="font-bold text-slate-900">{data.total_count.toLocaleString()}</span> 个相关仓库
+                {t('search.found', { count: data.total_count.toLocaleString() })}
                 {data.total_count > 1000 && (
                   <span className="ml-2 inline-flex items-center text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                    仅展示前 1k
+                    {t('search.limit')}
                   </span>
                 )}
               </span>
             ) : (
-              <span>准备就绪</span>
+              <span>{t('search.ready')}</span>
             )}
           </div>
           <div className="order-1 sm:order-2 self-end sm:self-auto">
@@ -130,10 +132,10 @@ export default function Home() {
             <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4">
               <AlertCircle className="w-8 h-8 text-red-500" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">数据获取异常</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">{t('error.title')}</h3>
             <p className="text-slate-500 max-w-md mb-6">{error}</p>
             <Button onClick={fetchData} className="gap-2">
-              <RefreshCcw className="w-4 h-4" /> 重试
+              <RefreshCcw className="w-4 h-4" /> {t('error.tryAgain')}
             </Button>
           </div>
         ) : loading ? (
@@ -149,12 +151,12 @@ export default function Home() {
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-400">
               <SearchIcon className="w-8 h-8" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">未找到相关项目</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">{t('search.noResults')}</h3>
             <p className="text-slate-500 max-w-md">
-              尝试更换关键词，或者减少筛选条件。我们目前仅展示 Star 数大于 1000 的 AI 仓库。
+              {t('search.noResultsHint')}
             </p>
             <Button variant="outline" onClick={() => setQuery("")} className="mt-6">
-              清除搜索条件
+              {t('search.clear')}
             </Button>
           </div>
         ) : (
@@ -178,7 +180,7 @@ export default function Home() {
             {/* End of results message */}
             {data && page * 24 >= Math.min(data.total_count, 1000) && (
               <div className="text-center py-8 text-slate-400 text-sm">
-                已加载全部高星 AI 仓库 (GitHub API 限制前 1000 条结果)
+                {t('search.end')}
               </div>
             )}
           </>
@@ -194,27 +196,27 @@ export default function Home() {
                 <Github className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">GitHub AI 导航</h2>
-                <p className="text-xs text-slate-500">精选全球最佳 AI 开源项目</p>
+                <h2 className="text-lg font-bold text-slate-900">{t('footer.title')}</h2>
+                <p className="text-xs text-slate-500">{t('footer.subtitle')}</p>
               </div>
             </div>
             
             <div className="flex flex-wrap justify-center gap-6 text-sm">
               <a href="https://github.com/gueson/ai-github-nav" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
-                项目源码
+                {t('footer.source')}
               </a>
               <a href="https://github.com/gueson/ai-github-nav/issues" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
-                反馈问题
+                {t('footer.issues')}
               </a>
               <a href="https://github.com/gueson/ai-github-nav/pulls" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-primary transition-colors">
-                贡献代码
+                {t('footer.pullRequests')}
               </a>
             </div>
           </div>
           
           <div className="mt-8 pt-8 border-t border-slate-200 text-center text-xs text-slate-500">
-            <p>© {new Date().getFullYear()} GitHub AI 导航. 数据来源于 GitHub API.</p>
-            <p className="mt-1">仅用于学习和研究目的，所有内容的版权归原作者所有。</p>
+            <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+            <p className="mt-1">{t('footer.license')}</p>
           </div>
         </div>
       </footer>

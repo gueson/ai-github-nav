@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { t } from "@/lib/i18n";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -28,7 +29,7 @@ export function SearchBar({ onSearch, isLoading }: SearchBarProps) {
       <Input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="搜索 AI 仓库..."
+        placeholder={t('search.placeholder')}
         className="pl-12 pr-12 h-12 rounded-full border-none bg-white shadow-sm border border-slate-200 
           focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:bg-white 
           hover:ring-1 hover:ring-primary/10 transition-all text-base"

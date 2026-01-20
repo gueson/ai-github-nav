@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { t } from "@/lib/i18n";
 
 interface SortToggleProps {
   order: "desc" | "asc";
@@ -22,7 +23,7 @@ export function SortToggle({ order, onChange }: SortToggleProps) {
         )}
       >
         <ArrowDown className="w-3.5 h-3.5 mr-2" />
-        Star 降序
+        {t('sort.desc')}
       </Button>
       <Button
         variant="ghost"
@@ -36,7 +37,7 @@ export function SortToggle({ order, onChange }: SortToggleProps) {
         )}
       >
         <ArrowUp className="w-3.5 h-3.5 mr-2" />
-        Star 升序
+        {t('sort.asc')}
       </Button>
     </div>
   );
