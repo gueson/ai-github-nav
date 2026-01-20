@@ -9,10 +9,9 @@
         <lastmod>2026-01-16</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
-        <image:image>
-            <image:loc>https://ai-github-nav.vercel.app/og-image.png</image:loc>
-            <image:caption>GitHub AI 导航 - 精选全球最佳 AI 开源项目</image:caption>
-        </image:image>
+        <media:content url="https://ai-github-nav.vercel.app/og-image.png" medium="image">
+            <media:title type="html">GitHub AI 导航 - 精选全球最佳 AI 开源项目</media:title>
+        </media:content>
     </url>
     
     <!-- 机器学习分类 -->
