@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ai-github-nav.vercel.app/sitemap.xml
+Sitemap: https://www.githubnav.online/sitemap.xml
