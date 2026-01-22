@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Github } from "lucide-react";
 import { t } from "@/lib/i18n";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { LogoContainer } from "@/components/Logo";
 
 export default function NotFound() {
   return (
@@ -11,9 +12,7 @@ export default function NotFound() {
       <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm">
         <div className="container max-w-[1400px] mx-auto px-4 h-20 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 bg-primary text-white rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-              <Github className="w-6 h-6" />
-            </div>
+            <LogoContainer size="md" />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold tracking-tight text-slate-900">{t('app.title')}</h1>
               <p className="text-xs text-slate-500 font-medium">{t('app.subtitle')}</p>
@@ -50,9 +49,7 @@ export default function NotFound() {
         <div className="container max-w-[1400px] mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-                <Github className="w-5 h-5" />
-              </div>
+              <LogoContainer size="sm" />
               <div>
                 <h2 className="text-lg font-bold text-slate-900">{t('footer.title')}</h2>
                 <p className="text-xs text-slate-500">{t('footer.subtitle')}</p>
