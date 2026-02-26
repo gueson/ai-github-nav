@@ -15,8 +15,11 @@ import { LogoContainer } from "@/components/Logo";
 export default function Home() {
   // 从URL获取初始查询参数
   const getInitialQuery = () => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("q") || "";
+    // 从 hash 部分获取参数
+    const currentHash = window.location.hash || "#/";
+    const hashPath = currentHash.startsWith("#") ? currentHash.substring(1) : currentHash;
+    const hashParams = new URLSearchParams(hashPath.split("?")[1] || "");
+    return hashParams.get("q") || "";
   };
   
   const [query, setQuery] = useState(getInitialQuery());
@@ -31,15 +34,23 @@ export default function Home() {
   
   // 当查询参数变化时更新URL
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    // 由于使用 hash-based routing，我们需要更新 hash 部分的参数
+    const currentHash = window.location.hash || "#/";
+    const hashPath = currentHash.startsWith("#") ? currentHash.substring(1) : currentHash;
+    const hashParams = new URLSearchParams(hashPath.split("?")[1] || "");
+    
     if (query) {
-      params.set("q", query);
+      hashParams.set("q", query);
     } else {
-      params.delete("q");
+      hashParams.delete("q");
     }
     
-    const newUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
-    window.history.replaceState(null, "", newUrl);
+    const newHashPath = hashPath.split("?")[0] || "/";
+    const newHash = hashParams.toString() 
+      ? `${newHashPath}?${hashParams.toString()}` 
+      : newHashPath;
+    
+    window.history.replaceState(null, "", `#${newHash}`);
   }, [query]);
 
   const fetchData = async () => {
@@ -122,6 +133,25 @@ export default function Home() {
           </div>
           <div className="order-1 sm:order-2 self-end sm:self-auto">
             <SortToggle order={order} onChange={handleSortChange} />
+          </div>
+        </div>
+        
+        {/* Popular Searches */}
+        <div className="mb-8">
+          <h2 className="text-sm font-semibold text-slate-700 mb-3">{t('search.popular')}</h2>
+          <div className="flex flex-wrap gap-2">
+            {['ai', 'llm', 'machine-learning', 'deep-learning', 'chatgpt', 'stable-diffusion', 'agent', 'mcp', 'geo'].map((term) => (
+              <button
+                key={term}
+                onClick={() => handleSearch(term)}
+                className={query === term 
+                  ? "px-3 py-1.5 text-xs font-medium text-white bg-primary rounded-full hover:bg-primary/90 transition-colors"
+                  : "px-3 py-1.5 text-xs font-medium text-slate-600 bg-slate-100 rounded-full hover:bg-slate-200 hover:text-slate-800 transition-colors"
+                }
+              >
+                {term.replace('-', ' ')}
+              </button>
+            ))}
           </div>
         </div>
 
