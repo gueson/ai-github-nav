@@ -1,89 +1,101 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface PaginationProps {
   page: number;
-  totalItems: number; // API caps at 1000 usually for search
+  totalItems: number;
   perPage: number;
   onPageChange: (page: number) => void;
   isLoading?: boolean;
 }
 
 export function Pagination({ page, totalItems, perPage, onPageChange, isLoading }: PaginationProps) {
-  // GitHub Search API limits results to first 1000 items
-  const MAX_RESULTS = 1000;
-  const effectiveTotal = Math.min(totalItems, MAX_RESULTS);
-  const totalPages = Math.ceil(effectiveTotal / perPage);
-
+  const totalPages = Math.min(Math.ceil(totalItems / perPage), 42);
+  const maxVisible = 5;
+  
+  const getPages = () => {
+    const pages: (number | 'dots')[] = [];
+    
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (page <= 3) {
+        pages.push(1, 2, 3, 4, 'dots', totalPages);
+      } else if (page >= totalPages - 2) {
+        pages.push(1, 'dots', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, 'dots', page - 1, page, page + 1, 'dots', totalPages);
+      }
+    }
+    
+    return pages;
+  };
+  
   if (totalPages <= 1) return null;
-
+  
   return (
-    <div className="flex items-center justify-center gap-2 mt-12 mb-8 [&_button]:cursor-pointer [&_button:disabled]:cursor-not-allowed">
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(1)}
-        disabled={page === 1 || isLoading}
-        className="hidden sm:flex"
-      >
-        <ChevronsLeft className="w-4 h-4" />
-      </Button>
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(Math.max(1, page - 1))}
-        disabled={page === 1 || isLoading}
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </Button>
-
-      <div className="flex items-center gap-1 mx-2">
-        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-          // Simple sliding window logic could be added here, 
-          // for now let's show a simplified range around current page
-          let p = page;
-          if (page < 3) p = i + 1;
-          else if (page > totalPages - 2) p = totalPages - 4 + i;
-          else p = page - 2 + i;
-          
-          if (p < 1 || p > totalPages) return null;
-
-          return (
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+      <span className="text-sm text-slate-500">
+        Page {page} of {totalPages}
+      </span>
+      <div className="flex items-center gap-1">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onPageChange(1)}
+          disabled={page === 1 || isLoading}
+          className="rounded-full w-8 h-8 p-0"
+        >
+          <ChevronsLeft className="w-4 h-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onPageChange(page - 1)}
+          disabled={page === 1 || isLoading}
+          className="rounded-full w-8 h-8 p-0"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+        
+        {getPages().map((p, i) => (
+          p === 'dots' ? (
+            <span key={i} className="w-8 h-8 flex items-center justify-center text-slate-400">...</span>
+          ) : (
             <Button
               key={p}
-              variant={p === page ? "default" : "ghost"}
+              variant={p === page ? 'default' : 'outline'}
               size="sm"
               onClick={() => onPageChange(p)}
               disabled={isLoading}
-              className={cn(
-                "w-9 h-9 rounded-md font-medium transition-all",
-                p === page ? "bg-primary text-primary-foreground shadow" : "text-slate-600 hover:bg-slate-100"
-              )}
+              className={`rounded-full w-8 h-8 p-0 ${p === page ? 'bg-blue-600 text-white hover:bg-blue-700' : ''}`}
             >
               {p}
             </Button>
-          );
-        })}
+          )
+        ))}
+        
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onPageChange(page + 1)}
+          disabled={page === totalPages || isLoading}
+          className="rounded-full w-8 h-8 p-0"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => onPageChange(totalPages)}
+          disabled={page === totalPages || isLoading}
+          className="rounded-full w-8 h-8 p-0"
+        >
+          <ChevronsRight className="w-4 h-4" />
+        </Button>
       </div>
-
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(Math.min(totalPages, page + 1))}
-        disabled={page === totalPages || isLoading}
-      >
-        <ChevronRight className="w-4 h-4" />
-      </Button>
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(totalPages)}
-        disabled={page === totalPages || isLoading}
-        className="hidden sm:flex"
-      >
-        <ChevronsRight className="w-4 h-4" />
-      </Button>
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowUp, ArrowDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { t } from "@/lib/i18n";
+import { ArrowUpDown } from "lucide-react";
 
 interface SortToggleProps {
   order: "desc" | "asc";
@@ -10,35 +8,27 @@ interface SortToggleProps {
 
 export function SortToggle({ order, onChange }: SortToggleProps) {
   return (
-    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => onChange("desc")}
-        className={cn(
-          "h-8 px-4 rounded-md text-sm font-medium transition-all",
-          order === "desc" 
-            ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90" 
-            : "text-slate-600 hover:bg-white hover:text-slate-900"
-        )}
-      >
-        <ArrowDown className="w-3.5 h-3.5 mr-2" />
-        {t('sort.desc')}
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => onChange("asc")}
-        className={cn(
-          "h-8 px-4 rounded-md text-sm font-medium transition-all",
-          order === "asc" 
-            ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90" 
-            : "text-slate-600 hover:bg-white hover:text-slate-900"
-        )}
-      >
-        <ArrowUp className="w-3.5 h-3.5 mr-2" />
-        {t('sort.asc')}
-      </Button>
+    <div className="flex items-center gap-2">
+      <span className="text-sm text-gray-500">Sort:</span>
+      <div className="flex rounded-lg border border-gray-200 overflow-hidden">
+        <Button
+          variant={order === "desc" ? "default" : "ghost"}
+          size="sm"
+          onClick={() => onChange("desc")}
+          className={`rounded-none border-r border-gray-200 ${order === "desc" ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
+        >
+          <ArrowUpDown className="w-3 h-3 mr-1" />
+          Stars
+        </Button>
+        <Button
+          variant={order === "asc" ? "default" : "ghost"}
+          size="sm"
+          onClick={() => onChange("asc")}
+          className={`rounded-none ${order === "asc" ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
+        >
+          Fewest
+        </Button>
+      </div>
     </div>
   );
 }

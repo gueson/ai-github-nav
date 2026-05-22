@@ -1,41 +1,32 @@
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@vercel/analytics/react";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Router, Route, Switch } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Privacy from "@/pages/Privacy";
 import NotFound from "@/pages/NotFound";
-import { SeoUpdater } from "@/components/SeoUpdater";
 
-// Use hash-based routing (/#/) to support opening index.html directly via file:// protocol
 function AppRouter() {
   return (
     <Router hook={useHashLocation}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/privacy" component={Privacy} />
         <Route component={NotFound} />
       </Switch>
     </Router>
   );
 }
 
-// Note on theming:
-// - Choose defaultTheme based on your design (light or dark background)
-// - Update the color palette in index.css to match
-// - If you want switchable themes, add `switchable` prop and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">
-        <TooltipProvider>
-          <Toaster />
-          <Analytics />
-          <SeoUpdater />
-          <AppRouter />
-        </TooltipProvider>
+        <Toaster />
+        <AppRouter />
       </ThemeProvider>
     </ErrorBoundary>
   );

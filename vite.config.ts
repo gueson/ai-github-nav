@@ -5,14 +5,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
-    react({
-      babel: {
-        plugins: [
-          // Inject data-source attribute for AI agent source location
-          "./scripts/babel-plugin-jsx-source-location.cjs",
-        ],
-      },
-    }),
+    react(),
     tailwindcss(),
   ],
   resolve: { alias: { "@": path.resolve(__dirname, "./src") } },
@@ -21,22 +14,9 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     sourcemap: false,
-    minify: "terser",
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"],
-          ui: ["@radix-ui/react-*", "lucide-react"],
-          utils: ["axios", "wouter"],
-        },
-      },
-    },
+    minify: "esbuild",
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096,
   },
   optimizeDeps: {
     include: ["react", "react-dom", "axios", "wouter", "lucide-react"],
